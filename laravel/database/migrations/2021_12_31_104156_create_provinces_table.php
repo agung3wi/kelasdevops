@@ -19,7 +19,7 @@ class CreateProvincesTable extends Migration
             $table->string('province_name', 200);
         });
 
-        DB::statement("INSERT INTO `provinces` VALUES
+        DB::statement("INSERT INTO provinces VALUES
         ('11', 'ACEH'),
         ('12', 'SUMATERA UTARA'),
         ('13', 'SUMATERA BARAT'),
