@@ -1,0 +1,6 @@
+---
+- hosts: app
+  become: true
+  tasks:
+    - name: Install Certbot
+      apt: name=python3-certbot-nginx state=latest
