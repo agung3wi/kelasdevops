@@ -52,7 +52,6 @@ class PelangganController extends Controller
 
         $pelanggan = new Pelanggan();
         if ($request->hasFile('image_profile')) {
-
             $pelanggan->image_profile = $request->file("image_profile")->store("profile");
         }
 
