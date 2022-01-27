@@ -2,37 +2,77 @@ version: "3"
 
 services:
   app:
-    image: agung3wi/php7.4-apache
-    container_name: app
+    image: nginx
+    container_name: nginx
+    volumes:
+      - "./default.conf:/etc/nginx/conf.d/default.conf"
     links:
-      - "mysql:mysql"
+      - "app1:app1"
+      - "app2:app2"
+    ports:
+      - "8000:8000"
+  app1:
+    image: app-laravel
+    container_name: app1
+    links:
+      - "db:db"
+      - "redis:redis"
     environment:
       DB_CONNECTION: mysql
-      DB_HOST: mysql
+      DB_HOST: db
       DB_PORT: 3306
       DB_DATABASE: bootcamp
       DB_USERNAME: bootcamp
       DB_PASSWORD: bootcamp
-    volumes:
-      - "../laravel:/app"
+      SESSION_DRIVER: redis
+      REDIS_HOST: redis
+      REDIS_PASSWORD: sOmE_sEcUrE_pAsS
+      REDIS_PORT: 6379
+      FILESYSTEM_DRIVER: minio
+      MINIO_KEY: minio1234
+      MINIO_SECRET: minio1234
+      MINIO_BUCKET: bootcamp
+      MINIO_ENDPOINT: http://192.168.88.78:9000
     ports:
-      - "8000:80"
+      - "8001:80"
+  app2:
+    image: app-laravel
+    container_name: app2
+    links:
+      - "db:db"
+      - "redis:redis"
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: bootcamp
+      DB_USERNAME: bootcamp
+      DB_PASSWORD: bootcamp
+      SESSION_DRIVER: redis
+      REDIS_HOST: redis
+      REDIS_PASSWORD: sOmE_sEcUrE_pAsS
+      REDIS_PORT: 6379
+      FILESYSTEM_DRIVER: minio
+      MINIO_KEY: minio1234
+      MINIO_SECRET: minio1234
+      MINIO_BUCKET: bootcamp
+      MINIO_ENDPOINT: http://192.168.88.78:9000
+    ports:
+      - "8002:80"
   migrate:
-    image: agung3wi/php7.4-apache
+    image: app-laravel
     container_name: migrate
     links:
-      - "mysql:mysql"
+      - "db:db"
     environment:
       DB_CONNECTION: mysql
-      DB_HOST: mysql
+      DB_HOST: db
       DB_PORT: 3306
       DB_DATABASE: bootcamp
       DB_USERNAME: bootcamp
       DB_PASSWORD: bootcamp
-    volumes:
-      - "../laravel:/app"
     command: php artisan migrate
-  mysql:
+  db:
     image: mysql:5.7
     container_name: mysql
     environment:
