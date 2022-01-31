@@ -10,6 +10,11 @@ node {
             sh "ssh ubuntu@dev.kelasdevops.xyz 'cd ~/dev.kelasdevops.xyz/ && rm composer.lock && composer install'"
         }
     }
+
+    // Testing
+    docker.image('ubuntu').inside('-u root') {
+       sh 'echo "Ini adalah test"'
+    }
     
     // deploy env prod
     docker.image('agung3wi/alpine-rsync:1.1').inside('-u root') {
