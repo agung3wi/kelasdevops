@@ -1,7 +1,7 @@
 - hosts: all
   become: yes
   vars:
-    domain: ansible.kelasdevops.xyz
+    domain: prod.kelasdevops.xyz
     user: ubuntu
   tasks:
     - name: "create  directory"

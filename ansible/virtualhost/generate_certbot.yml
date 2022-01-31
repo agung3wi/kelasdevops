@@ -2,7 +2,7 @@
 - hosts: app 
   become: true
   vars:
-    domain: ansible.kelasdevops.xyz
+    domain: prod.kelasdevops.xyz
     email: agungskripsi05@gmail.com
   tasks:
     - name: Create and Install Cert Using nginx Plugin
