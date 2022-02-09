@@ -15,7 +15,7 @@ provider "aws" {
 
 variable "instance_tags" {
   type = list
-  default = ["worker-1", "worker-2"]
+  default = ["vm1", "vm2", "vm3"]
 }
 
 resource "aws_instance" "app_server" {
@@ -24,7 +24,7 @@ resource "aws_instance" "app_server" {
   instance_type = "t3.micro"
   subnet_id = "subnet-04fc1b6d9cd6df09e"
   vpc_security_group_ids = ["sg-0186874d7b36b13ec"]
-  key_name = "kelasdevops"
+  key_name = "maclocal"
 
   tags = {
     Name = element(var.instance_tags, count.index)
